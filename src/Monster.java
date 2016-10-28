@@ -10,34 +10,34 @@ package src;
  */
 
 public class Monster extends RandomOccupant {
-	/**
-	 * constructor to randomly locate itself in the Maze. (Remember, the parent
-	 * of this class is RandomOccupant.)
-	 * 
-	 * @param maze
-	 */
-	public Monster(Maze maze) {
-		// TODO
-	}
+    /**
+     * constructor to randomly locate itself in the Maze. (Remember, the parent
+     * of this class is RandomOccupant.)
+     * 
+     * @param maze
+     */
+    public Monster(Maze maze) {
+        // TODO
+    }
 
-	/**
-	 * constructor to randomly locate itself in the Maze with a seed for the
-	 * Random class.
-	 * 
-	 * @param maze
-	 * @param seed
-	 */
-	public Monster(Maze maze, long seed) {
-		// TODO
-	}
+    /**
+     * constructor to randomly locate itself in the Maze with a seed for the
+     * Random class.
+     * 
+     * @param maze
+     * @param seed
+     */
+    public Monster(Maze maze, long seed) {
+        // TODO
+    }
 
-	/**
-	 * constructor to generate a Monster in a specified location in the Maze.
-	 * 
-	 * @param maze
-	 * @param location
-	 */
-	public Monster(Maze maze, Square location) {
-		// TODO
-	}
+    /**
+     * constructor to generate a Monster in a specified location in the Maze.
+     * 
+     * @param maze
+     * @param location
+     */
+    public Monster(Maze maze, Square location) {
+        // TODO
+    }
 }

@@ -10,37 +10,37 @@ package src;
  */
 
 abstract class Occupant {
-	Square square;
+    Square square;
 
-	public Occupant() {
-		// empty constructor
-	}
+    public Occupant() {
+        // empty constructor
+    }
 
-	/**
-	 * Overridden constructor for Occupant
-	 * 
-	 * @param start
-	 */
-	public Occupant(Square start) {
-		this.square = start;
-	}
+    /**
+     * Overridden constructor for Occupant
+     * 
+     * @param start
+     */
+    public Occupant(Square start) {
+        this.square = start;
+    }
 
-	/**
-	 * a query method for the location
-	 * 
-	 * @return
-	 */
-	public Square location() {
-		// TODO
-		return null;
-	}
+    /**
+     * a query method for the location
+     * 
+     * @return
+     */
+    public Square location() {
+        // TODO
+        return null;
+    }
 
-	/**
-	 * a command to change the Occupants location
-	 * 
-	 * @param newLoc
-	 */
-	void moveTo(Square newLoc) {
-		// TODO
-	}
+    /**
+     * a command to change the Occupants location
+     * 
+     * @param newLoc
+     */
+    void moveTo(Square newLoc) {
+        // TODO
+    }
 }
