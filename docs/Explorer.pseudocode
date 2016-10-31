@@ -1,0 +1,28 @@
+Subclass of Occupant
+
+Has a name and a maze that it inhabits
+
+Constructor with location, maze, and name
+
+query for name
+
+method to move based on key press
+	if up
+		if no wall
+			subtract one from column value
+			move up a square
+	else if down 
+		if no wall
+			add one to column value
+			move down a square
+	else if left 
+		if no wall
+			subtract from row value
+			move left one square
+	else if right
+		if no wall
+			add to row value
+			move right one square
+
+move to method, called by move method
+	puts explorer in target location

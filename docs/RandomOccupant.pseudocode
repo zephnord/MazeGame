@@ -1,1 +1,20 @@
 Class is abstract
+Used for randomly placed maze occupants (monster, treasure)
+
+Create a random object
+choose the maze it inhabits
+
+Constructor that pics the maze
+	randomly choose location in maze
+	does not pick completely filled squares
+
+Constructor with maze and seed
+
+constructor with maze and location
+
+Move method
+	get row and column of location
+	choose direction randomly
+	While Direction is invalid, choose until valid
+	adjust location
+	place in square

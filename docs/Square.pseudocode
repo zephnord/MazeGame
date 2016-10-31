@@ -1,0 +1,27 @@
+Represents a square in the maze
+Has a constant for each side UP, RIGHT, DOWN, LEF
+
+Wall method
+	determines if there is a wall in the given direction
+
+Accessors
+	methods to return the instance variables
+
+x value
+	returns the x value of the upper left pixel
+
+y value
+	returns the y value of upper left pixel
+
+SetInView
+	if in view of explorer
+		in view = true
+	else 
+		in view = false
+
+SetTreasure
+	chooses the treasure for the maze
+
+Enter
+	if explorer is inside & treasure is inside
+		set treasure to found
