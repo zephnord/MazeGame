@@ -31,8 +31,7 @@ abstract class Occupant {
      * @return
      */
     public Square location() {
-        // TODO
-        return null;
+        return this.square;
     }
 
     /**
@@ -41,6 +40,6 @@ abstract class Occupant {
      * @param newLoc
      */
     void moveTo(Square newLoc) {
-        // TODO
+        this.square = newLoc;
     }
 }

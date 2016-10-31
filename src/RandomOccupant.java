@@ -32,6 +32,7 @@ abstract class RandomOccupant extends Occupant {
      */
     public RandomOccupant(Maze maze) {
         this.maze = maze;
+        //this.
     }
 
     /**

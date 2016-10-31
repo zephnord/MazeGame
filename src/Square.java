@@ -10,15 +10,39 @@ package src;
  */
 
 public class Square {
-    public int SQUARE_SIZE = 50;
-    public int UP = 0;
-    public int RIGHT = 1;
-    public int DOWN = 2;
-    public int LEFT = 3;
+    public final int SQUARE_SIZE = 50;
+    public final int UP = 0;
+    public final int RIGHT = 1;
+    public final int DOWN = 2;
+    public final int LEFT = 3;
+    public boolean[] wall = {false, false, false, false};
+    public boolean seen = false;
+    public boolean inView = false;
+    public int row;
+    public int col;
+    public Treasure treasure = null;
+    
 
+    /**
+     * A constructor to initialize the walls array and the row and column.
+     * The booleans to keep track of "seen" and "inView" should default to 
+     * false. The Treasure reference starts out null.
+     * @param up
+     * @param right
+     * @param down
+     * @param left
+     * @param row
+     * @param col
+     */
     public Square(boolean up, boolean right, boolean down, boolean left,
             int row, int col) {
         // TODO
+        this.wall[0] = up;
+        this.wall[1] = right;
+        this.wall[2] = down;
+        this.wall[3] = left;
+        this.row = row;
+        this.col = col;
     }
 
     /**
@@ -28,8 +52,7 @@ public class Square {
      * @return
      */
     public boolean wall(int direction) {
-        // TODO
-        return false;
+        return this.wall[direction];
     }
 
     /**
@@ -38,8 +61,7 @@ public class Square {
      * @return
      */
     public boolean seen() {
-        // TODO
-        return false;
+        return seen;
     }
 
     /**
@@ -48,8 +70,7 @@ public class Square {
      * @return
      */
     public boolean inView() {
-        // TODO
-        return false;
+        return inView;
     }
 
     /**
@@ -58,8 +79,7 @@ public class Square {
      * @return
      */
     public int row() {
-        // TODO
-        return 0;
+        return row;
     }
 
     /**
@@ -68,8 +88,7 @@ public class Square {
      * @return
      */
     public int col() {
-        // TODO
-        return 0;
+        return col;
     }
 
     /**
@@ -78,7 +97,7 @@ public class Square {
      * @return
      */
     public boolean treasure() {
-        // TODO
+        //TODO
         return false;
     }
 
@@ -113,7 +132,7 @@ public class Square {
      * @param inView
      */
     public void setInView(boolean inView) {
-        // TODO
+        this.inView = inView;
     }
 
     /**
@@ -122,7 +141,7 @@ public class Square {
      * @param t
      */
     public void setTreasure(Treasure t) {
-        // TODO
+        this.treasure = t;
     }
 
     /**
@@ -131,6 +150,7 @@ public class Square {
      * treasure's setFound() method.
      */
     public void enter() {
-        // TODO
+        if(this.treasure())
+            treasure.setFound();
     }
 }

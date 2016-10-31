@@ -18,6 +18,7 @@ public class Monster extends RandomOccupant {
      */
     public Monster(Maze maze) {
         // TODO
+        
     }
 
     /**

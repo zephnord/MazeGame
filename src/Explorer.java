@@ -1,5 +1,7 @@
 package src;
 
+import java.awt.event.KeyEvent;
+
 /**
  * Contains the class and method implementations for Explorer, extends Occupant
  * abstract class.
@@ -24,7 +26,10 @@ public class Explorer extends Occupant {
      * @param name
      */
     public Explorer(Square location, Maze maze, String name) {
-        // TODO
+        this.square = location;
+        this.maze = maze;
+        this.name = name;
+        this.maze.lookAround(square);
     }
 
     /**
@@ -44,7 +49,29 @@ public class Explorer extends Occupant {
      * @param key
      */
     public void move(int key) {
-        // TODO
+        //TODO
+        this.square.row();
+        this.square.col();
+        if(key == KeyEvent.VK_UP) {
+            if(!this.square.wall(square.UP)) {
+                moveTo(square);
+            }
+        }
+        else if(key == KeyEvent.VK_DOWN) {
+            if(!this.square.wall(square.DOWN)) {
+                moveTo(square);
+            }
+        }
+        else if(key == KeyEvent.VK_RIGHT) {
+            if(!this.square.wall(square.RIGHT)) {
+                moveTo(square);
+            }
+        }
+        else if(key == KeyEvent.VK_LEFT) {
+            if(!this.square.wall(square.LEFT)) {
+                moveTo(square);
+            }
+        }
     }
 
     // TODO
@@ -57,6 +84,9 @@ public class Explorer extends Occupant {
      * @param s
      */
     public void moveTo(Square s) {
-        // TODO
+        this.moveTo(s);
+        s.enter();
+        this.maze.lookAround(s);
+        //TODO
     }
 }

@@ -27,12 +27,12 @@ public class Maze {
     /**
      * Constructor for objects of class Maze
      */
-    public Maze(Square[][] squares, int rows, int cols) {
-        // CHANGE - initialize the squares, rows, and cols instance variables to
-        // what is passed in to the constructor
-
-        // CHANGE - create the empty ArrayList of RandomOccupants
-
+    public Maze(Square[][] squares, int rows, int cols) {        
+        this.squares = squares;
+        this.rows = rows;
+        this.cols = cols;
+        
+        randOccupants = new ArrayList<RandomOccupant>();
     }
 
     // QUERIES
@@ -56,21 +56,16 @@ public class Maze {
         return explorer;
     }
 
-    // CHANGE - Implement the following two methods. I have them stubbed to
-    // return dummy values just so it will compile.
-    // Your getRandomOccupant should return the occupant from the ArrayList at
-    // the specified index.
-    public RandomOccupant getRandomOccupant(int index) {
-        return new Treasure(this);
+    public RandomOccupant getRandomOccupant(int index) {        
+        return randOccupants.get(index);
     }
 
     public int getNumRandOccupants() {
-        return 0;
+        return randOccupants.size();
     }
 
-    // COMMANDS
-    // CHANGE - implement the following method
     public void addRandomOccupant(RandomOccupant ro) {
+        randOccupants.add(ro);
     }
 
     public void setExplorer(Explorer e) {
@@ -96,17 +91,22 @@ public class Maze {
     public int gameStatus() {
         int status = ACTIVE;
 
-        // CHANGE - implement
-
+        if(foundAllTreasures())
+            status = EXPLORER_WIN;
+        else {
+            for(int i = 0; i < getNumRandOccupants(); i++) 
+                if(getExplorer().location().equals(randOccupants.get(i).location())) 
+                    status = MONSTER_WIN;                    
+        }
         return status;
     }
 
     private boolean foundAllTreasures() {
         boolean foundAll = true;
-
-        // CHANGE - search through all the occupants to see if the Treasures
-        // have been found. Return false if
-        // - there is a Treasure that hasn't been found.
+        
+        for(int i = 0; i < getNumRandOccupants(); i++) 
+            if(randOccupants.get(i) instanceof Treasure)
+                foundAll = false;
 
         return foundAll;
     }
@@ -121,11 +121,41 @@ public class Maze {
         // Set the current square so that we are viewing it (obviously)
         s.setInView(true);
 
-        // CHANGE - Check the adjacent squares. If there isn't a wall in the
-        // way, set their inview to true.
-        // - Check the diagonal squares. If there isn't a wall in the way, set
-        // their inview to true.
-
+        if(row - 1 >= 0) {
+            if(!s.wall(s.UP)){
+                squares[row - 1][col].setInView(true);
+            }
+        }
+        if(!s.wall(s.RIGHT)){
+            squares[row][col + 1].setInView(true);
+        }
+        if(!s.wall(s.DOWN)){
+            squares[row + 1][col].setInView(true);
+        }
+        
+        if(col - 1 >= 0) {
+            if(!s.wall(s.LEFT)){
+                squares[row][col - 1].setInView(true);
+            }
+        }
+        
+        //getting out of bounds error - checking outside maze if on edge
+        if(row - 1 >= 0) {
+            if(!squares[row - 1][col].wall(s.RIGHT)){
+                squares[row - 1][col + 1].setInView(true);
+            }
+            if(!squares[row + 1][col].wall(s.RIGHT)){
+                squares[row + 1][col + 1].setInView(true);
+            }
+        }
+        if(col - 1 > 0) {
+            if(!squares[row][col - 1].wall(s.UP)){
+                squares[row - 1][col - 1].setInView(true);
+            }
+            if(!squares[row + 1][col].wall(s.LEFT)){
+                squares[row + 1][col - 1].setInView(true);
+            }   
+        }
     }
 
     private void resetInView() {

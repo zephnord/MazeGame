@@ -1,0 +1,28 @@
+Create grid size using 2D square array
+Create a Maze object and objects contained within Maze
+
+Check if Treasures are all found
+	If there are no randomOccupants of type treasure
+		Explorer wins
+	Else
+		Continue game
+Else
+	Check Maze Occupant
+		If Monster and in same location as Explorer
+			Monster wins
+		Else
+			Continue game
+		
+Continuing game involves moving the explorer around
+Move Explorer
+	If user enters key
+		Check to see if corresponding adjacent and diagonal squares are a wall
+		If no wall
+			That square is inView
+		Else
+			That square is not inView
+	
+		Move to specified square if inView
+			Enter square and check if there is treasure in that square
+			Determine new adjacent and diagonal square inViews
+			
