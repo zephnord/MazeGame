@@ -121,41 +121,64 @@ public class Maze {
         // Set the current square so that we are viewing it (obviously)
         s.setInView(true);
 
-        if(row - 1 >= 0) {
-            if(!s.wall(s.UP)){
-                squares[row - 1][col].setInView(true);
-            }
-        }
-        if(!s.wall(s.RIGHT)){
-            squares[row][col + 1].setInView(true);
-        }
-        if(!s.wall(s.DOWN)){
-            squares[row + 1][col].setInView(true);
-        }
-        
-        if(col - 1 >= 0) {
-            if(!s.wall(s.LEFT)){
-                squares[row][col - 1].setInView(true);
-            }
-        }
-        
-        //getting out of bounds error - checking outside maze if on edge
-        if(row - 1 >= 0) {
-            if(!squares[row - 1][col].wall(s.RIGHT)){
-                squares[row - 1][col + 1].setInView(true);
-            }
-            if(!squares[row + 1][col].wall(s.RIGHT)){
+        if(row == 0 && col == 0) {   
+            if(!s.wall(s.DOWN))
+                squares[row + 1][col].setInView(true);
+            if(!s.wall(s.RIGHT))
+                squares[row][col + 1].setInView(true);
+            if(!squares[row][col + 1].wall(s.DOWN))
                 squares[row + 1][col + 1].setInView(true);
-            }
         }
-        if(col - 1 > 0) {
-            if(!squares[row][col - 1].wall(s.UP)){
+        else if(row == 0 && col > 0) {
+            if(!s.wall(s.DOWN))
+                squares[row - 1][col].setInView(true);
+            if(!squares[0][0].wall(s.RIGHT))
+                squares[row][col + 1].setInView(true);
+            if(!s.wall(s.LEFT))
+                squares[row][col - 1].setInView(true);
+            if(!squares[row][col + 1].wall(s.DOWN))
+                squares[row + 1][col + 1].setInView(true);
+            if(!squares[row][col - 1].wall(s.DOWN))
                 squares[row - 1][col - 1].setInView(true);
-            }
-            if(!squares[row + 1][col].wall(s.LEFT)){
-                squares[row + 1][col - 1].setInView(true);
-            }   
         }
+        else if(col == 0 && row == this.squares[1].length - 1) {
+            if(!s.wall(s.UP))
+                squares[row - 1][col].setInView(true);
+            if(!s.wall(s.RIGHT))
+                squares[row][col + 1].setInView(true);
+            if(!squares[row][col + 1].wall(s.UP))
+                squares[row - 1][col + 1].setInView(true);
+        }
+        else if(col == 0 && row < this.squares[1].length - 1) {
+            if(!s.wall(s.DOWN))
+                squares[row + 1][col].setInView(true);
+            if(!s.wall(s.UP))
+                squares[row - 1][col].setInView(true);
+            if(!s.wall(s.RIGHT))
+                squares[row][col + 1].setInView(true);
+            if(!squares[row][col + 1].wall(s.UP))
+                squares[row - 1][col + 1].setInView(true);
+            if(!squares[col - 1][row].wall(s.UP))
+                squares[row - 1][col - 1].setInView(true);
+        }
+        else {
+            if(!s.wall(s.LEFT))
+                squares[row][col - 1].setInView(true);
+            if(!s.wall(s.DOWN))
+                squares[row + 1][col].setInView(true);
+            if(!s.wall(s.UP))
+                squares[row - 1][col].setInView(true);
+            if(!s.wall(s.RIGHT))
+                squares[row][col + 1].setInView(true);
+            if(!squares[row][col + 1].wall(s.UP))
+                squares[row - 1][col + 1].setInView(true);
+            if(!squares[col - 1][row].wall(s.UP))
+                squares[row - 1][col - 1].setInView(true);
+            if(!squares[row][col + 1].wall(s.DOWN))
+                squares[row + 1][col + 1].setInView(true);
+            if(!squares[row][col - 1].wall(s.DOWN))
+                squares[row - 1][col - 1].setInView(true);
+        }     
     }
 
     private void resetInView() {

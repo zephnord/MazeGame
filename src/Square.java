@@ -16,8 +16,8 @@ public class Square {
     public final int DOWN = 2;
     public final int LEFT = 3;
     public boolean[] wall = {false, false, false, false};
-    public boolean seen = false;
-    public boolean inView = false;
+    public boolean seen;
+    public boolean inView;
     public int row;
     public int col;
     public Treasure treasure = null;
@@ -43,6 +43,8 @@ public class Square {
         this.wall[3] = left;
         this.row = row;
         this.col = col;
+        this.seen = false;
+        this.inView = false;
     }
 
     /**

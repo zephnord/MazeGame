@@ -64,7 +64,8 @@ public class P3Tests
        *     |       |   |
        *     -------------
        */
-    
+      
+      
       mazeSquares[0][0] = new Square(true, false, true, true, 0, 0);
       mazeSquares[0][1] = new Square(true, true, false, false, 0, 1);
       mazeSquares[0][2] = new Square(true, true, false, true, 0, 2);
