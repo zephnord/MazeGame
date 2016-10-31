@@ -1,0 +1,16 @@
+Extends RandomOccupant
+
+Boolean saying if it has been found
+
+constructor with maze
+constructor with maze and seed
+constructor with maze and location
+
+Found
+	checks state of the treasure
+
+SetFound
+	sets found to true when explorer finds
+
+Move
+	overides the move method to make this stationary
