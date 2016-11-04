@@ -78,6 +78,9 @@ public class Maze {
 
     public void randMove() {
         // CHANGE - instruct each object in the RandomOccupant to move
+        for(int i = 0; i < getNumRandOccupants(); i++) {
+            getRandomOccupant(i).move();
+        }                
     }
 
     /**
@@ -131,7 +134,7 @@ public class Maze {
         }
         else if(row == 0 && col > 0) {
             if(!s.wall(s.DOWN))
-                squares[row - 1][col].setInView(true);
+                squares[row + 1][col].setInView(true);
             if(!squares[0][0].wall(s.RIGHT))
                 squares[row][col + 1].setInView(true);
             if(!s.wall(s.LEFT))
@@ -139,7 +142,7 @@ public class Maze {
             if(!squares[row][col + 1].wall(s.DOWN))
                 squares[row + 1][col + 1].setInView(true);
             if(!squares[row][col - 1].wall(s.DOWN))
-                squares[row - 1][col - 1].setInView(true);
+                squares[row + 1][col - 1].setInView(true);
         }
         else if(col == 0 && row == this.squares[1].length - 1) {
             if(!s.wall(s.UP))

@@ -98,9 +98,8 @@ public class Square {
      * 
      * @return
      */
-    public boolean treasure() {
-        //TODO
-        return false;
+    public Treasure treasure() {
+        return treasure;
     }
 
     /**
@@ -110,8 +109,7 @@ public class Square {
      * @return
      */
     public int x() {
-        // TODO
-        return 0;
+        return row  * SQUARE_SIZE;
     }
 
     /**
@@ -121,8 +119,7 @@ public class Square {
      * @return
      */
     public int y() {
-        // TODO
-        return 0;
+        return col * SQUARE_SIZE;
     }
 
     /**
@@ -143,7 +140,7 @@ public class Square {
      * @param t
      */
     public void setTreasure(Treasure t) {
-        this.treasure = t;
+        treasure = t;
     }
 
     /**
@@ -152,7 +149,7 @@ public class Square {
      * treasure's setFound() method.
      */
     public void enter() {
-        if(this.treasure())
+        if(treasure() != null)
             treasure.setFound();
     }
 }

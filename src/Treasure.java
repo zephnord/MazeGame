@@ -19,10 +19,9 @@ public class Treasure extends RandomOccupant {
      * @param maze
      */
     public Treasure(Maze maze) {
-        this.maze = maze;
+        super(maze);
         this.found = false;
-        // TODO
-        // setTreasure
+        square.setTreasure(this);
     }
 
     /**
@@ -32,7 +31,9 @@ public class Treasure extends RandomOccupant {
      * @param seed
      */
     public Treasure(Maze maze, long seed) {
-        // TODO
+        super(maze, seed);
+        this.found = false;
+        square.setTreasure(this);
     }
 
     /**
@@ -42,7 +43,9 @@ public class Treasure extends RandomOccupant {
      * @param location
      */
     public Treasure(Maze maze, Square location) {
-        // TODO
+        super(maze, location);
+        this.found = false;
+        square.setTreasure(this);
     }
 
     /**
@@ -67,6 +70,6 @@ public class Treasure extends RandomOccupant {
      * move itself randomly about the Maze.
      */
     public void move() {
-        // TODO
+        super.moveTo(square);
     }
 }

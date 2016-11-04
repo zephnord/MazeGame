@@ -1,5 +1,7 @@
 package src;
 
+import java.util.Random;
+
 /**
  * Contains the class Monster that extends RandomOccupant to model a Monster.
  * 
@@ -10,6 +12,9 @@ package src;
  */
 
 public class Monster extends RandomOccupant {
+    Maze maze;
+    Random random;
+    
     /**
      * constructor to randomly locate itself in the Maze. (Remember, the parent
      * of this class is RandomOccupant.)
@@ -17,8 +22,7 @@ public class Monster extends RandomOccupant {
      * @param maze
      */
     public Monster(Maze maze) {
-        // TODO
-        
+        super(maze);
     }
 
     /**
@@ -29,7 +33,7 @@ public class Monster extends RandomOccupant {
      * @param seed
      */
     public Monster(Maze maze, long seed) {
-        // TODO
+        super(maze, seed);
     }
 
     /**
@@ -39,6 +43,6 @@ public class Monster extends RandomOccupant {
      * @param location
      */
     public Monster(Maze maze, Square location) {
-        // TODO
+        super(maze, location); 
     }
 }

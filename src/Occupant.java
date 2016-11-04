@@ -12,8 +12,10 @@ package src;
 abstract class Occupant {
     Square square;
 
+    /**
+     * Default constructor
+     */
     public Occupant() {
-        // empty constructor
     }
 
     /**
@@ -39,7 +41,7 @@ abstract class Occupant {
      * 
      * @param newLoc
      */
-    void moveTo(Square newLoc) {
-        this.square = newLoc;
+    public void moveTo(Square newLoc) {
+        square = newLoc;
     }
 }

@@ -31,8 +31,11 @@ abstract class RandomOccupant extends Occupant {
      * @param maze
      */
     public RandomOccupant(Maze maze) {
+        super();
+        random = new Random();
         this.maze = maze;
-        //this.
+        super.moveTo(maze.getSquare(random.nextInt(maze.cols()),
+                random.nextInt(maze.rows())));
     }
 
     /**
@@ -42,7 +45,11 @@ abstract class RandomOccupant extends Occupant {
      * @param seed
      */
     public RandomOccupant(Maze maze, long seed) {
-        // TODO
+        super();
+        random = new Random(seed);
+        this.maze = maze;
+        super.moveTo(maze.getSquare(random.nextInt(maze.cols()),
+                random.nextInt(maze.rows())));
     }
 
     /**
@@ -54,7 +61,10 @@ abstract class RandomOccupant extends Occupant {
      * @param location
      */
     public RandomOccupant(Maze maze, Square location) {
-        // TODO
+        super();
+        random = new Random();
+        this.maze = maze;
+        super.moveTo(location);
     }
 
     /**
@@ -62,7 +72,37 @@ abstract class RandomOccupant extends Occupant {
      * fashion. The move must be legal, however, so that it does not move
      * through any walls in its current location.
      */
-    public void move() {
-        // TODO
+    public void move() { 
+        // local variables to generate moving the row and column
+        // by 1 or -1
+        boolean hasMoved = false;
+        while (!hasMoved) {
+            int toMove =  random.nextInt(4);
+            if (toMove == square.UP) {
+                if (!square.wall(square.UP)) {
+                    super.moveTo(
+                            maze.getSquare(square.row() - 1, square.col()));
+                    hasMoved = true;
+                }
+            } else if (toMove == square.RIGHT) {
+                if (!square.wall(square.RIGHT)) {
+                    super.moveTo(
+                            maze.getSquare(square.row(), square.col() + 1));
+                    hasMoved = true;
+                }
+            } else if (toMove == square.DOWN) {
+                if (!square.wall(square.DOWN)) {
+                    super.moveTo(
+                            maze.getSquare(square.row() + 1, square.col()));
+                    hasMoved = true;
+                }
+            } else if (toMove == square.LEFT) {
+                if (!square.wall(square.LEFT)) {
+                    super.moveTo(
+                            maze.getSquare(square.row(), square.col() - 1));
+                    hasMoved = true;
+                }
+            }
+        }
     }
 }

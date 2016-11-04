@@ -49,33 +49,29 @@ public class Explorer extends Occupant {
      * @param key
      */
     public void move(int key) {
-        //TODO
         this.square.row();
         this.square.col();
         if(key == KeyEvent.VK_UP) {
             if(!this.square.wall(square.UP)) {
-                moveTo(square);
+                moveTo(maze.getSquare(square.row() - 1, square.col()));
             }
         }
         else if(key == KeyEvent.VK_DOWN) {
             if(!this.square.wall(square.DOWN)) {
-                moveTo(square);
+                moveTo(maze.getSquare(square.row() + 1, square.col()));
             }
         }
         else if(key == KeyEvent.VK_RIGHT) {
             if(!this.square.wall(square.RIGHT)) {
-                moveTo(square);
+                moveTo(maze.getSquare(square.row(), square.col() + 1));
             }
         }
         else if(key == KeyEvent.VK_LEFT) {
             if(!this.square.wall(square.LEFT)) {
-                moveTo(square);
+                moveTo(maze.getSquare(square.row(), square.col() - 1));
             }
         }
     }
-
-    // TODO
-    // Possibly need to put in class getter methods
 
     /**
      * Commands the Explorer to move to another Square in the Maze Actual moving
@@ -84,9 +80,8 @@ public class Explorer extends Occupant {
      * @param s
      */
     public void moveTo(Square s) {
-        this.moveTo(s);
+        super.moveTo(s);
         s.enter();
-        this.maze.lookAround(s);
-        //TODO
+        maze.lookAround(s);
     }
 }
