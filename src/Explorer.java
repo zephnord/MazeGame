@@ -26,7 +26,7 @@ public class Explorer extends Occupant {
      * @param name
      */
     public Explorer(Square location, Maze maze, String name) {
-        this.square = location;
+        super(location);
         this.maze = maze;
         this.name = name;
         this.maze.lookAround(square);
