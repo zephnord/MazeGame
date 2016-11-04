@@ -13,11 +13,18 @@ import org.junit.runners.MethodSorters;
 import src.Explorer;
 import src.Maze;
 import src.Square;
+import src.Treasure;
+import src.Monster;
+import src.DrawableSquare;
 
 import org.junit.rules.*;
 import org.junit.runner.Description;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JFrame;
+
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -52,6 +59,8 @@ public class P3Tests
       Square[][] mazeSquares = new Square[3][3];
       Maze maze;
       Explorer ex;
+      Monster monster;
+      Treasure treasure;
       
       /*     -------------
        *     |       |   |
@@ -78,6 +87,8 @@ public class P3Tests
       
       maze = new Maze(mazeSquares, 3, 3);
       ex = new Explorer(mazeSquares[0][0], maze, "Super Chris");
+      monster = new Monster(maze, mazeSquares[0][1]);
+      treasure = new Treasure(maze, mazeSquares[2][1]);
       
       assertEquals(mazeSquares[0][0], ex.location());
       assertEquals("Super Chris", ex.name());
@@ -89,7 +100,29 @@ public class P3Tests
       assertFalse(mazeSquares[1][2].inView());
       assertFalse(mazeSquares[2][0].inView());
       assertFalse(mazeSquares[2][1].inView());
-      assertFalse(mazeSquares[2][2].inView());      
+      assertFalse(mazeSquares[2][2].inView());
+      
+      
+      ex.move(KeyEvent.VK_RIGHT);
+      assertEquals(mazeSquares[0][1], ex.location());
+      ex.move(KeyEvent.VK_DOWN);
+      assertEquals(mazeSquares[1][1], ex.location());
+      assertFalse(mazeSquares[1][0].inView());
+      
+      //Monster tests
+      assertEquals(mazeSquares[0][1], monster.location());
+      monster.move();
+      System.out.println(monster.location().row() + " " + monster.location().col());
+      monster.move();
+      System.out.println(monster.location().row() + " " + monster.location().col());
+      monster.move();
+      System.out.println(monster.location().row() + " " + monster.location().col());
+      
+      assertFalse(treasure.found());
+      assertEquals(mazeSquares[2][1], treasure.location());
+      ex.move(KeyEvent.VK_DOWN);
+      assertEquals(mazeSquares[2][1], ex.location());
+      assertTrue(treasure.found());     
       
    }
 }
