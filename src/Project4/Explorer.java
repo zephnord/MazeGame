@@ -1,5 +1,6 @@
 
 import java.awt.event.KeyEvent;
+import java.util.Scanner;
 
 /**
  * Contains the class and method implementations for Explorer, extends Occupant
@@ -14,9 +15,10 @@ import java.awt.event.KeyEvent;
 public class Explorer extends Occupant {
     private String name;
     private Maze maze; // reference to the Maze occupant/explorer is in
-    
+
     /**
      * Constructor added for project 4
+     * 
      * @param maze
      */
     public Explorer(Maze maze) {
@@ -89,9 +91,13 @@ public class Explorer extends Occupant {
         s.enter();
         maze.lookAround(s);
     }
-    
+
     public String toText(char delimiter) {
-        return (super.toText(delimiter) + delimiter
-                + name);
+        return (super.toText(delimiter) + delimiter + name);
+    }
+
+    public void toObject(Scanner input) {
+        super.toObject(input);
+        name = input.next();
     }
 }

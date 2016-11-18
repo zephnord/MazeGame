@@ -1,5 +1,6 @@
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Contains the abstract class RandomOccupant that extends Occupant and its
@@ -93,5 +94,8 @@ public abstract class RandomOccupant extends Occupant {
                 }
             }
         }
+    }
+    public void toObject(Scanner input) {
+        super.toObject(input);
     }
 }

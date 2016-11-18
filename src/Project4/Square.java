@@ -9,7 +9,7 @@ import java.util.Scanner;
  * @version Fall 2016
  */
 
-public class Square {
+public class Square implements DelimitedTextIO {
     public static final int SQUARE_SIZE = 50;
     public static final int UP = 0;
     public static final int RIGHT = 1;
@@ -22,14 +22,16 @@ public class Square {
     private int row = 0;
     private int col = 0;
     private Treasure treasure = null;
-    
+
     /**
      * Constructor added for project 4
+     * 
      * @param row
      * @param col
      */
-    public Square(int row, int col) { 
-        //TODO
+    public Square(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     /**
@@ -161,26 +163,22 @@ public class Square {
         if (treasure() != null)
             treasure.setFound();
     }
-    
+
     public String toText(char delimiter) {
-        return (getClass().getName() + delimiter
-                + row + delimiter
-                + col + delimiter
-                + wall(UP) + delimiter
-                + wall(RIGHT) + delimiter
-                + wall(DOWN) + delimiter
-                + wall(LEFT) + delimiter
-                + seen + delimiter
-                + inView);
+        return (getClass().getName() + delimiter + row + delimiter + col
+                + delimiter + wall(UP) + delimiter + wall(RIGHT) + delimiter
+                + wall(DOWN) + delimiter + wall(LEFT) + delimiter + seen
+                + delimiter + inView);
     }
-    
+
     public void toObject(Scanner input) {
         wall[UP] = input.nextBoolean();
         wall[RIGHT] = input.nextBoolean();
         wall[DOWN] = input.nextBoolean();
         wall[LEFT] = input.nextBoolean();
-        
+
         seen = input.nextBoolean();
         inView = input.nextBoolean();
+       
     }
 }

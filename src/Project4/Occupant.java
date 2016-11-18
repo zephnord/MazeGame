@@ -9,7 +9,7 @@ import java.util.Scanner;
  * @version Fall 2016
  */
 
-public abstract class Occupant {
+public abstract class Occupant implements DelimitedTextIO {
     private Square square;
 
     /**
@@ -52,6 +52,8 @@ public abstract class Occupant {
     }
     
     public void toObject(Scanner input) {
-        //nothing to operate on
+        int row = input.nextInt();
+        int col = input.nextInt();  
+        square = new Square(row, col);
     }
 }

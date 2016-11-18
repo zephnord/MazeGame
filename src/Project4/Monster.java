@@ -39,5 +39,5 @@ public class Monster extends RandomOccupant {
      */
     public Monster(Maze maze, Square location) {
         super(maze, location);
-    }
+    } 
 }

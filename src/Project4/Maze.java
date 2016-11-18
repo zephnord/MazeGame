@@ -21,8 +21,8 @@ public class Maze {
     private Square[][] squares;
     private ArrayList<RandomOccupant> randOccupants;
     private Explorer explorer;
-    private int rows = 0;
-    private int cols = 0;
+    private int rows;
+    private int cols;
 
     /**
      * Default constructor for maze class - added for project 4
@@ -187,30 +187,47 @@ public class Maze {
      */
     public void writeMazeToFile(String fileName) throws IOException {
         // Create a file to write to
-        PrintStream outFile = new PrintStream(new File(fileName));
+        // PrintStream outFile = new PrintStream(new File(fileName));
 
-        // Write rows/cols of Maze
-        outFile.println(rows + "," + cols);
+        try {
+            File outFile = new File(fileName);
+            // PrintStream outFile = new PrintStream(new File(fileName));
+            PrintWriter out = new PrintWriter(outFile);
+            // Write rows/cols of Maze
+            out.println(rows + "," + cols);
+            // out.write("\n");
 
-        // Write Squares
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                outFile.println(squares[i][j].toText(','));
+            // Write Squares
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    out.println(squares[i][j].toText(','));
+                    // writer.write("\n");
+                }
             }
-        }
 
-        // Write Occupants
-        // Write Explorer
-        outFile.println(explorer.toText(','));
+            // Write the Explorer
+            if(getExplorer() != null)
+                out.println(getExplorer().toText(','));
 
-        // Write Treasures and Monsters
-        for (int i = 0; i < getNumRandOccupants(); i++) {
-            if (getRandomOccupant(i) instanceof Treasure)
-                outFile.println(((Treasure) getRandomOccupant(i)).toText(','));
-            else
-                outFile.println(((Monster) getRandomOccupant(i)).toText(','));
+            // Write Treasures and Monsters
+            for (int i = 0; i < getNumRandOccupants(); i++) {
+                if (getRandomOccupant(i) instanceof Treasure)
+                    out.println(((Treasure) getRandomOccupant(i)).toText(','));
+            }
+            for (int i = 0; i < getNumRandOccupants(); i++) {
+                if (getRandomOccupant(i) instanceof Monster)
+                    out.println(((Monster) getRandomOccupant(i)).toText(','));
+                // out.println("\n");
+            }
+
+            out.close();
+        } catch (IOException ex) {
+            // throw new RuntimeException(e.toString());
+            ex.printStackTrace();
+        } catch (NullPointerException ex) {
+            //ex.printStackTrace();
+            System.out.print(ex);
         }
-        outFile.close();
     }
 
     /**
@@ -226,42 +243,92 @@ public class Maze {
     public void readMazeFromFile(String fileName)
             throws IOException, FileNotFoundException, MazeReadException {
         // Create input stream
-        Scanner inFile = new Scanner(new File(fileName));
+        // String inFile = fileName;
+        String line = "";
+        int lineNum = 1;
+        
+        try {
+            // FileReader fileReader = new FileReader(fileName);
+            Scanner in = new Scanner(new File(fileName));
+            // reader.useDelimiter(",");
 
-        // Determine Maze size and create a new one
-        Scanner createMaze = new Scanner(inFile.nextLine()).useDelimiter(",");
-        rows = createMaze.nextInt();
-        cols = createMaze.nextInt();
-        squares = new Square[rows][cols];
-
-        // Read through rest of file
-        while (inFile.hasNextLine()) {
-            // Identify the object type
-            Scanner in = new Scanner(inFile.nextLine())
-                    .useDelimiter(",");
-            String type = in.next();
-            
-            //Create objects based on the type input
-            if(type.equals("Square")) {
-                int row = in.nextInt();
-                int col = in.nextInt();
-                squares[row][col] = new Square(row, col);
-                squares[row][col].toObject(in);
+            Scanner maze = new Scanner(in.nextLine());
+            maze.useDelimiter(",");
+            if(maze.hasNextInt()){
+                rows = maze.nextInt();
+                cols = maze.nextInt();
+            }
+            else {
+                line = maze.nextLine();
+                throw new MazeReadException("Rows and columns not specified.", line, lineNum);
             }
             
-            else if(type.equals("Explorer")) {
-                //explorer = new Explorer(Maze);
-                explorer.toObject(in);                
-            }
+            lineNum++;
             
-            else if(type.equals("Monster")) {
-                Monster monster = new Monster(maze);
-            }
-                
+            squares = new Square[rows][cols];
+            maze.close();
 
+            // Read through rest of file
+            while (in.hasNextLine()) {
+                Scanner inReader = new Scanner(in.nextLine());
+                //Scanner errorReader = new Scanner(in.nextLine());
+                inReader.useDelimiter(",");
+
+                // Identify the object type
+                //line = in.nextLine();
+                String type = inReader.next();
+
+                // Create objects based on the type input
+                if (type.equals("Square")) {
+                    int row = inReader.nextInt();
+                    int col = inReader.nextInt();
+                    if(squares[row][col] != null) {
+                        line = type + "," + row + "," + col + inReader.nextLine();
+                        throw new MazeReadException("Duplicate square.", line, lineNum);
+                    }
+                    lineNum++;
+                    squares[row][col] = new Square(row, col);
+                    squares[row][col].toObject(inReader);
+                }
+
+                else if (type.equals("Explorer")) {
+                    explorer = new Explorer(this);
+                    setExplorer(explorer);
+                    lineNum++;
+                    explorer.toObject(inReader);
+                }
+
+                else if (type.equals("Monster")) {
+                    Monster monster = new Monster(this);
+                    lineNum++;
+                    monster.toObject(inReader);
+                    addRandomOccupant(monster);
+
+                }
+
+                else if (type.equals("Treasure")) {
+                    if(!inReader.hasNextInt() && inReader.hasNextInt()){
+                        System.out.println(inReader.nextLine());
+                        throw new MazeReadException("Line format or other error.", inReader.nextLine(), lineNum);
+                    }
+                    Treasure treasure = new Treasure(this);
+                    lineNum++;
+                    treasure.toObject(inReader);
+                    addRandomOccupant(treasure);
+                }
+                else {
+                    line = type + inReader.nextLine();
+                    throw new MazeReadException("Unknown type.", line, lineNum);
+                }
+
+                inReader.close();
+            }
+            in.close();
+
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } catch (InputMismatchException ex) {
+            throw new MazeReadException("Rows and columns not specified.", line, lineNum);
         }
-
-        // TODO
-
     }
 }

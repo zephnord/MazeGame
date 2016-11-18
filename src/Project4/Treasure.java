@@ -72,22 +72,25 @@ public class Treasure extends RandomOccupant {
     public void move() {
         // super.moveTo(square);
     }
-    
+
     /**
      * Override the Occupants moveTo method
      */
     public void moveTo(Square newLoc) {
-        if(this.location() != null)
-            super.moveTo(newLoc);
+        if (this.location() != null) {
+            this.location().setTreasure(null);
+        }
+        super.moveTo(newLoc);
+        newLoc.setTreasure(this);
+
     }
-    
+
     public String toText(char delimiter) {
-        return (super.toText(delimiter) + delimiter
-                + found);
+        return (super.toText(delimiter) + delimiter + found);
     }
-    
+
     public void toObject(Scanner input) {
         super.toObject(input);
-        found = input.nextBoolean();        
-    } 
+        found = input.nextBoolean();
+    }
 }
