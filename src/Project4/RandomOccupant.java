@@ -95,7 +95,7 @@ public abstract class RandomOccupant extends Occupant {
             }
         }
     }
-    public void toObject(Scanner input) {
-        super.toObject(input);
+    public void moveTo(Square newLoc) {
+        super.moveTo(newLoc);
     }
 }

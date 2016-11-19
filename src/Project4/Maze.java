@@ -250,15 +250,17 @@ public class Maze {
         try {
             // FileReader fileReader = new FileReader(fileName);
             Scanner in = new Scanner(new File(fileName));
+            Scanner temp = new Scanner(new File(fileName));
             // reader.useDelimiter(",");
 
             Scanner maze = new Scanner(in.nextLine());
             maze.useDelimiter(",");
-            if(maze.hasNextInt()){
+            
+            try{
                 rows = maze.nextInt();
                 cols = maze.nextInt();
             }
-            else {
+            catch(RuntimeException ex) {
                 line = maze.nextLine();
                 throw new MazeReadException("Rows and columns not specified.", line, lineNum);
             }
@@ -271,13 +273,24 @@ public class Maze {
             // Read through rest of file
             while (in.hasNextLine()) {
                 Scanner inReader = new Scanner(in.nextLine());
+                
+                temp.nextLine();
+                
                 //Scanner errorReader = new Scanner(in.nextLine());
                 inReader.useDelimiter(",");
 
                 // Identify the object type
                 //line = in.nextLine();
-                String type = inReader.next();
+                String type = "";
 
+                try{
+                    type = inReader.next();
+                }
+                catch(RuntimeException ex) {
+                    //line = inReader.nextLine();
+                    throw new MazeReadException("Line format or other error.", "", lineNum);
+                }
+                
                 // Create objects based on the type input
                 if (type.equals("Square")) {
                     int row = inReader.nextInt();
@@ -292,29 +305,44 @@ public class Maze {
                 }
 
                 else if (type.equals("Explorer")) {
-                    explorer = new Explorer(this);
+                    try{
+                    Explorer explorer = new Explorer(this);
                     setExplorer(explorer);
                     lineNum++;
                     explorer.toObject(inReader);
+                    }
+                    catch(RuntimeException ex) {
+                        line = type + "," + inReader.nextLine();
+                        throw new MazeReadException("Line format or other error.", line, lineNum);
+                    }
                 }
 
                 else if (type.equals("Monster")) {
+                    try {
                     Monster monster = new Monster(this);
                     lineNum++;
                     monster.toObject(inReader);
-                    addRandomOccupant(monster);
+                    addRandomOccupant(monster); 
+                    }
+                    catch(RuntimeException ex) {
+                        line = type + "," + inReader.nextLine();
+                        throw new MazeReadException("Line format or other error.", line, lineNum);
+                    }
 
                 }
 
                 else if (type.equals("Treasure")) {
-                    if(!inReader.hasNextInt() && inReader.hasNextInt()){
-                        System.out.println(inReader.nextLine());
-                        throw new MazeReadException("Line format or other error.", inReader.nextLine(), lineNum);
-                    }
-                    Treasure treasure = new Treasure(this);
-                    lineNum++;
+                    //Scanner temp = new Scanner(inFile);
+                    try{ 
+                    Treasure treasure = new Treasure(this);                    
                     treasure.toObject(inReader);
+                    lineNum++;
                     addRandomOccupant(treasure);
+                    }
+                    catch(RuntimeException ex) {
+                        line = temp.nextLine();
+                        throw new MazeReadException("Line format or other error.", line, lineNum);
+                    }
                 }
                 else {
                     line = type + inReader.nextLine();
@@ -327,8 +355,8 @@ public class Maze {
 
         } catch (IOException ex) {
             throw new RuntimeException(ex);
-        } catch (InputMismatchException ex) {
-            throw new MazeReadException("Rows and columns not specified.", line, lineNum);
-        }
+        } //catch (InputMismatchException ex) {
+           // throw new MazeReadException("Rows and columns not specified.", line, lineNum);
+        //}
     }
 }
